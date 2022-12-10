@@ -404,6 +404,7 @@ export default {
   },
   async beforeRouteLeave (to, from, next) {
      this.store.resetStore() 
+     next()
   }
 };
 </script>
