@@ -194,13 +194,13 @@ export default {
       if (this.title === 'Oxygen') {
      
         if(this.store.oxygen?.id===undefined){
-             let formData = {
+           let formData = {
           patient_id: this.store?.currentPatient?.id,
           vital_type: 'oxygen',
           oxygen_saturation: params.value,
         };
           const { data } = await api.post('/vitals', formData);
-          this.oxyOptions = data.data;
+          this.oxyOptions = [data.data];
           this.store.setOxygen(data.data);
           this.showFormDialog = false;
         }else{
@@ -211,7 +211,7 @@ export default {
           oxygen_saturation: params.value,
         };
           const { data } = await api.post('/vitals/', formData);
-          this.oxyOptions = data.data;
+          this.oxyOptions = [data.data];
           this.store.setOxygen(data.data);
           this.showFormDialog = false;
         }
@@ -270,7 +270,7 @@ export default {
     if(this.store.temperature?.id !== undefined ){
     this.tempOptions = [this.store.temperature];
     }
-    if(  this.store.oxygen?.id === undefined ){
+    if(  this.store.oxygen?.id !== undefined ){
       this.oxyOptions = [this.store.oxygen];
     }
 
@@ -279,7 +279,7 @@ export default {
  if(this.store.temperature?.id !== undefined ){
     this.tempOptions = [this.store.temperature];
     }
-    if(  this.store.oxygen?.id === undefined ){
+    if( this.store.oxygen?.id !== undefined ){
       this.oxyOptions = [this.store.oxygen];
     }
     this.tempFlag = this.store.temperature?.vital_flag;
