@@ -204,6 +204,20 @@
       :thickness="10"
     />
   </base-dialog>
+        <q-dialog v-model="leaveStatut" persistent color="red">
+          <q-card
+          
+          >
+            <q-card-section >
+              <div class="text-h6">Voulez-vous supprimer cet utilisateur</div>
+            </q-card-section>
+
+            <q-card-actions align="right">
+              <q-btn label="Valider" color="blue"  />
+              <q-btn label="Cancel" color="red" @click="(leaveStatut=false)"/>
+            </q-card-actions>
+          </q-card>
+        </q-dialog>
 </template>
 
 <script lang="ts">
@@ -215,6 +229,7 @@ import VueCountdown from '@chenfengyuan/vue-countdown';
 import { useAppStore } from 'src/stores/appStor';
 import { api } from 'src/boot/axios';
 import { store } from 'quasar/wrappers';
+import { useQuasar } from 'quasar';
 
 export default {
   components: {
@@ -243,6 +258,7 @@ export default {
   },
   data() {
     return {
+      leaveStatut:false,
       open: false,
       loading: false,
       saveBtn: false,
@@ -344,7 +360,7 @@ export default {
     },
     isLoading(status:boolean){
       this.loading = status
-    }
+    },
   },
  async created() {
     if(this.$route.params.id !== undefined){
@@ -355,8 +371,6 @@ export default {
       this.store.setTabs('alarms')
        this.isLoading(false)
       this.next('alarms')
-    }else{
-       this.store.resetStore()
     }
   },
   validations() {
@@ -373,6 +387,7 @@ export default {
       fabRight: ref(true),
       v$: useVuelidate(),
       store: useAppStore(),
+    
     };
   },
   watch: {
@@ -387,5 +402,8 @@ export default {
       immediate: true, // This ensures the watcher is triggered upon creation
     },
   },
+  async beforeRouteLeave (to, from, next) {
+     this.store.resetStore() 
+  }
 };
 </script>
