@@ -200,7 +200,7 @@ export default {
           oxygen_saturation: params.value,
         };
           const { data } = await api.post('/vitals', formData);
-          this.oxyOptions = [data.data];
+          this.oxyOptions = data.data;
           this.store.setOxygen(data.data);
           this.showFormDialog = false;
         }else{
@@ -211,7 +211,7 @@ export default {
           oxygen_saturation: params.value,
         };
           const { data } = await api.post('/vitals/', formData);
-          this.oxyOptions = [data.data];
+          this.oxyOptions = data.data;
           this.store.setOxygen(data.data);
           this.showFormDialog = false;
         }
@@ -270,7 +270,7 @@ export default {
     if(this.store.temperature?.id !== undefined ){
     this.tempOptions = [this.store.temperature];
     }
-    if(  this.store.oxygen?.id !== undefined ){
+    if(this.store.oxygen?.id !== undefined ){
       this.oxyOptions = [this.store.oxygen];
     }
 
@@ -278,12 +278,14 @@ export default {
   created() {
  if(this.store.temperature?.id !== undefined ){
     this.tempOptions = [this.store.temperature];
+      this.tempFlag = this.store.temperature?.vital_flag;
     }
     if( this.store.oxygen?.id !== undefined ){
       this.oxyOptions = [this.store.oxygen];
+          this.oxygenFlag = this.store.oxygen?.vital_flag;
     }
-    this.tempFlag = this.store.temperature?.vital_flag;
-    this.oxygenFlag = this.store.oxygen?.vital_flag;
+  
+
 
   },
   computed: {
